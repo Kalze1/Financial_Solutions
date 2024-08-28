@@ -38,7 +38,7 @@ def analyze_sentiment_vader(df, text_column):
 
     # Visualize sentiment distribution
     plt.figure(figsize=(8, 6))
-    sentiment_counts.plot(kind='bar', color=['green', 'red', 'gray'])
+    sentiment_counts.plot(kind='bar', color=['gray', 'green', 'red'])
     plt.title('Sentiment Distribution')
     plt.xlabel('Sentiment')
     plt.ylabel('Count')
