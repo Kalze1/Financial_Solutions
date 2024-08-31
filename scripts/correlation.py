@@ -2,10 +2,9 @@ import pandas as pd
 from scripts.headline_analysis import analyze_sentiment_vader
 
 
-def calculate_correlation(df_news, df_stock):
+def calculate_correlation(df_news, df_stock, column):
     
-    analyze_sentiment_vader(df_news, "headline")
-    df_stock['stock_price_change'] = df_stock['Close'].pct_change()
+    df_stock['stock_price_change'] = df_stock[column].pct_change()
 
     daily_sentiment= df_news.groupby('date')['sentiment_score'].mean()
     daily_sentiment_df = daily_sentiment.reset_index()
@@ -19,7 +18,11 @@ def calculate_correlation(df_news, df_stock):
     daily_sentiment_df['date'] = pd.to_datetime(daily_sentiment_df['date'])
     combined_data = pd.merge(combined_data, daily_sentiment_df[['date', 'mean_sentiment_score']], on='date', how='left')
     combined_data = combined_data.dropna(how="any")
-    correlation = combined_data[['mean_sentiment_score', 'stock_price_change']].corr()
+    shifted_stock_price_change = combined_data['stock_price_change'].shift(1)
+    correlation = combined_data[['mean_sentiment_score', shifted_stock_price_change]].corr()
+
+
+    # correlation = combined_data[['mean_sentiment_score', 'stock_price_change']].corr()
     
 
     return correlation

@@ -27,7 +27,10 @@ def file_path(name):
 
 def load_data(name):
     path = file_path(name)
-    df = pd.read_csv(path, parse_dates=['date'])
+    if path == -1:
+        return "invalid name"
+    else:
+        df = pd.read_csv(path, parse_dates=['date'])
     
     return df
     
