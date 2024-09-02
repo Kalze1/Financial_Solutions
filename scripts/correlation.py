@@ -18,11 +18,7 @@ def calculate_correlation(df_news, df_stock, column):
     daily_sentiment_df['date'] = pd.to_datetime(daily_sentiment_df['date'])
     combined_data = pd.merge(combined_data, daily_sentiment_df[['date', 'mean_sentiment_score']], on='date', how='left')
     combined_data = combined_data.dropna(how="any")
-    shifted_stock_price_change = combined_data['stock_price_change'].shift(1)
-    correlation = combined_data[['mean_sentiment_score', shifted_stock_price_change]].corr()
-
-
-    # correlation = combined_data[['mean_sentiment_score', 'stock_price_change']].corr()
+    correlation = combined_data[['mean_sentiment_score', 'stock_price_change']].corr()
     
 
     return correlation
