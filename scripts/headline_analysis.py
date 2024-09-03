@@ -30,6 +30,10 @@ def analyze_sentiment_vader(df, text_column):
 
     df['sentiment'] = df['sentiment_score'].apply(classify_sentiment)
 
+
+    # Calculate sentiment frequency
+    sentiment_counts = df['sentiment'].value_counts()
+
     # Print the DataFrame with sentiment information
     print(df[['headline', 'sentiment_score', 'sentiment']])
 
@@ -43,6 +47,7 @@ def analyze_sentiment_vader(df, text_column):
     plt.xlabel('Sentiment')
     plt.ylabel('Count')
     plt.show()
+
 
     return df
 
